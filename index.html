@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronómetro & Cuenta Regresiva</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Tabs para cambiar de modo -->
+    <div class="tabs">
+      <button class="tab active" data-mode="stopwatch">
+        <span class="tab-icon">&#9650;</span>
+        Stopwatch
+      </button>
+      <button class="tab" data-mode="countdown">
+        <span class="tab-icon">&#9660;</span>
+        Countdown
+      </button>
+    </div>
+
+    <!-- ============ MODO STOPWATCH ============ -->
+    <div id="stopwatch" class="mode active">
+      <div class="display" id="sw-display">00:00.00</div>
+
+      <div class="controls">
+        <button id="sw-start" class="btn btn-start">Start</button>
+        <button id="sw-stop" class="btn btn-stop" disabled>Stop</button>
+        <button id="sw-lap" class="btn btn-lap" disabled>Lap</button>
+        <button id="sw-reset" class="btn btn-reset" disabled>Reset</button>
+      </div>
+
+      <!-- Lista de laps -->
+      <div id="laps-container" class="laps-container hidden">
+        <h3>Laps</h3>
+        <ul id="laps-list"></ul>
+      </div>
+    </div>
+
+    <!-- ============ MODO COUNTDOWN ============ -->
+    <div id="countdown" class="mode">
+      <!-- Input para ingresar segundos (visible solo cuando no está corriendo) -->
+      <div id="cd-input-wrapper" class="input-wrapper">
+        <label for="cd-input">Ingresá el tiempo en segundos:</label>
+        <input type="number" id="cd-input" min="1" max="359999" placeholder="ej: 100" />
+        <p class="input-hint" id="cd-preview">→ 00:00.00</p>
+      </div>
+
+      <div class="display" id="cd-display">00:00.00</div>
+
+      <div class="controls">
+        <button id="cd-start" class="btn btn-start">Start</button>
+        <button id="cd-pause" class="btn btn-stop" disabled>Pause</button>
+        <button id="cd-reset" class="btn btn-reset" disabled>Reset</button>
+      </div>
+
+      <!-- Alerta visual cuando termina -->
+      <div id="cd-alert" class="alert hidden">¡Tiempo terminado!</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

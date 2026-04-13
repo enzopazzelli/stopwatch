@@ -1,0 +1,332 @@
+/* ===================================================
+   RESET Y BASE
+   Fondo oscuro, tipografía limpia, centrado vertical.
+   =================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #0f0f0f;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
+}
+
+/* ===================================================
+   CONTENEDOR PRINCIPAL
+   =================================================== */
+.container {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 20px;
+}
+
+/* ===================================================
+   TABS — Stopwatch (verde ▲) / Countdown (rojo ▼)
+   =================================================== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.tab {
+  flex: 1;
+  padding: 14px 8px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #888;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab:hover {
+  color: #ccc;
+}
+
+/* Icono de flecha dentro del tab */
+.tab-icon {
+  font-size: 14px;
+  transition: color 0.25s ease;
+}
+
+/* Tab Stopwatch activo → fondo sutil y flecha verde */
+.tab.active[data-mode="stopwatch"] {
+  background: #1e2a1e;
+  color: #4ade80;
+}
+.tab.active[data-mode="stopwatch"] .tab-icon {
+  color: #22c55e;
+}
+
+/* Tab Countdown activo → fondo sutil y flecha roja */
+.tab.active[data-mode="countdown"] {
+  background: #2a1e1e;
+  color: #f87171;
+}
+.tab.active[data-mode="countdown"] .tab-icon {
+  color: #ef4444;
+}
+
+/* ===================================================
+   MODOS — solo el activo es visible
+   =================================================== */
+.mode {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.mode.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================================================
+   DISPLAY DEL TIEMPO
+   Tipografía monoespaciada grande para legibilidad.
+   =================================================== */
+.display {
+  font-family: 'Consolas', 'Courier New', 'SF Mono', monospace;
+  font-size: clamp(48px, 12vw, 80px);
+  text-align: center;
+  padding: 32px 0;
+  letter-spacing: 2px;
+  color: #f5f5f5;
+  /* Ancho fijo por carácter para evitar saltos de layout */
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===================================================
+   BOTONES
+   =================================================== */
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 90px;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Deshabilitado: se baja opacidad y se quita interacción */
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Start → verde */
+.btn-start {
+  background: #22c55e;
+  color: #0a0a0a;
+}
+.btn-start:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+/* Stop / Pause → rojo */
+.btn-stop {
+  background: #ef4444;
+  color: #fff;
+}
+.btn-stop:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+/* Lap → azul */
+.btn-lap {
+  background: #3b82f6;
+  color: #fff;
+}
+.btn-lap:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+/* Reset → gris neutro */
+.btn-reset {
+  background: #404040;
+  color: #e0e0e0;
+}
+.btn-reset:hover:not(:disabled) {
+  background: #525252;
+}
+
+/* ===================================================
+   LAPS (Stopwatch)
+   =================================================== */
+.laps-container {
+  margin-top: 28px;
+}
+
+.laps-container h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+#laps-list {
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+#laps-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #1a1a1a;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  animation: slideIn 0.2s ease;
+}
+
+#laps-list li .lap-number {
+  color: #888;
+}
+
+#laps-list li .lap-time {
+  color: #4ade80;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Scrollbar personalizado para la lista de laps */
+#laps-list::-webkit-scrollbar {
+  width: 6px;
+}
+#laps-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+#laps-list::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+/* ===================================================
+   COUNTDOWN — Input y alerta
+   =================================================== */
+.input-wrapper {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.input-wrapper label {
+  display: block;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+#cd-input {
+  width: 160px;
+  padding: 10px 16px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #f5f5f5;
+  font-size: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#cd-input:focus {
+  border-color: #ef4444;
+}
+
+/* Quitar flechas del input number en Chrome/Firefox */
+#cd-input::-webkit-outer-spin-button,
+#cd-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#cd-input {
+  -moz-appearance: textfield;
+}
+
+.input-hint {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+/* Alerta visual cuando el countdown llega a 0 */
+.alert {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ef4444;
+  padding: 18px;
+  border: 2px solid #ef4444;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  animation: pulse 0.6s ease infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.7; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.03); }
+}
+
+/* ===================================================
+   UTILIDADES
+   =================================================== */
+.hidden {
+  display: none !important;
+}
+
+/* Display parpadeante cuando el countdown termina */
+.display.finished {
+  color: #ef4444;
+  animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
