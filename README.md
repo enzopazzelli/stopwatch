@@ -10,7 +10,7 @@ Inspirado en [online-stopwatch.com](https://www.online-stopwatch.com/).
 
 1. Cloná el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/stopwatch.git
+   git clone https://github.com/enzopazzelli/stopwatch.git
    ```
 2. Abrí `index.html` en tu navegador.
 
